@@ -1,0 +1,32 @@
+{
+  "main": "login.html",
+  "name": "login",
+  "description": "demo app of login",
+  "version": "1.0.0",
+  "keywords": [ "demo", "login" ],
+  "window": {
+    "title": "",
+    "icon": "",
+    "toolbar": false,
+    "frame": true,
+    "width": 1000,
+    "height": 1000,
+    "position": "center",
+    "min_width": 400,
+    "min_height": 200,
+    "max_width": 9999,
+    "max_height": 9999,
+    "as_desktop" :false,
+    "resizable":true,
+    "always-on-top":true,
+    "fullscreen":false,
+    "show_in_taskbar":false,
+    "show":true,
+    "kiosk":false
+},
+  "webkit": {
+    "plugin":false,
+    "java":false,
+    "page-cache":false
+    }
+}

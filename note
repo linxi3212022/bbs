@@ -1,0 +1,168 @@
+项目需求：
+    1. 搞清楚产品需求（产品经理）
+        1. 基于用户认证组件Ajax实现登陆验证（图片验证码）
+        2. 基于Ajax和forms组件实现注册功能
+            基于form组件设计注册页面
+            点击头像等同于点击input
+            头像预览：
+                获取用户选中文件对象
+                获取文件对象的路径
+                修改img的src属性src等于文件对象的路径
+            错误信息的展示
+                views：form.error{"user":[...]}
+                ajax.success:function(){}
+            局部钩子和全局钩子的校验
+                user字段不能重复
+                两次密码不一致
+            如果数据校验通过
+
+        3. 设计系统首页（文章列表的渲染）
+            admin:不是项目必须的
+                Django内部的一个组件：后台数据管理组件（web页面）
+                python3 manage.py createsuperuser 针对用户认证组件对应的用户表
+
+                admin注册
+        4. 设计一个个人站点页面
+        5. 文章详情页
+        6. 实现对文章的点赞功能
+        7. 实现文章的评论的功能
+            对评论的评论功能
+        8. 后台管理页面
+        9. 富文本编辑框和防止XSS攻击
+    2. 设计表结构
+        from django.contrib.auth.models import AbstractUser
+        from django.db import models
+        class UserInfo(AbstractUser):
+            """
+            用户信息
+            """
+            nid = models.AutoField(primary_key=True)
+            telephone = models.CharField(max_length=11, null=True, unique=True)
+            avatar = models.FileField(upload_to="avatars/", default="/avatars/default.png")
+            create_time = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
+
+            # 与Blog建立一对一的关系
+            blog = models.OneToOneField(to="Blog", to_field="nid", null=True)
+
+            def __str__(self):
+                return self.username
+        Django实现：
+            会将文件对象下载到项目的根目录中的avatar文件夹中（如果没有avatar文件夹，Django会自动创建），user_obj的avatar存的是文件相对路径
+            Django有两种静态文件
+                js css img
+                /media/用户上传的文件
+                media配置
+                    一旦配置了MEDIA_ROOT，Django会将文件对象下载到media_root的avatar文件夹中（如果没有avatar文件夹，Django会自动创建），user_obj的avatar存的是文件相对路径
+            MEDIA_ROOT配置之MEDIA_URL
+                客户端浏览器如何能直接访问到media中的数据
+
+        class Blog(models.Model):
+            """
+            博客信息表
+            """
+            nid = models.AutoField(primary_key=True)
+            title = models.CharField(verbose_name="个人博客标题", max_length=64)
+            site_name = models.CharField(verbose_name="站点名称", max_length=64)
+            theme = models.CharField(verbose_name="博客主题", max_length=32)
+
+            def __str__(self):
+                return self.title
+
+
+        class Category(models.Model):
+            """
+            博主个人文章分类表
+            """
+            nid = models.AutoField(primary_key=True)
+            title = models.CharField(verbose_name="分类标题", max_length=32)
+            blog = models.ForeignKey(verbose_name="所属博客", to="Blog", to_field="nid")
+
+            def __str__(self):
+                return self.title
+
+
+        class Tag(models.Model):
+            nid = models.AutoField(primary_key=True)
+            title = models.CharField(verbose_name="标签名称", max_length=32)
+            blog = models.ForeignKey(verbose_name="所属博客", to="Blog", to_field="nid")
+
+            def __str__(self):
+                return self.title
+
+
+        class Article(models.Model):
+            nid = models.AutoField(primary_key=True)
+            title = models.CharField(verbose_name="文章标题", max_length=32)
+            desc = models.CharField(max_length=255, verbose_name="文章描述")
+            creat_time = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
+
+            commen_count = models.IntegerField(default=0)
+            up_count = models.IntegerField(default=0)
+            down_count = models.IntegerField(default=0)
+            content = models.TextField()
+
+            user = models.ForeignKey(verbose_name="作者", to="UserInfo", to_field="nid")
+            category = models.ForeignKey(to="Category", to_field="nid", null=True)
+            tags = models.ManyToManyField(
+                to="Tag",
+                Through="Article2Tag",
+                through_fields=("Article", "tag")
+            )
+
+            def __str__(self):
+                return self.title
+
+
+        class Article2Tag(models.Model):
+            nid = models.AutoField(primary_key=True)
+            article = models.ForeignKey(verbose_name="文章", to="Article", to_field="nid", max_length=32)
+            tag = models.ForeignKey(verbose_name="标签", to="Tag", to_field="nid")
+
+            class Meta:
+                unique_together = [
+                    ("article", "tag"),
+                ]
+
+            def __str__(self):
+                v = self.article.title + "---" + self.tag.title
+                return v
+
+
+        class ArticleUpDown(models.Model):
+            """
+            点赞表
+            """
+            nid = models.AutoField(primary_key=True)
+            user = models.ForeignKey("UserInfo", null=True)
+            article = models.ForeignKey("Article", null=True)
+            is_up = models.BooleanField(default=True)
+
+            class Meta:
+                unique_together = [
+                    ("article", "user")
+                ]
+
+
+        class Comment(models.Model):
+            """
+            评论表
+            """
+            nid = models.AutoField(primary_key=True)
+            article = models.ForeignKey(verbose_name="评论文章", to="Article", to_field="nid")
+            user = models.ForeignKey(verbose_name="评论者", to="UserInfo", to_field="nid")
+            content = models.CharField(max_length=255, verbose_name="评论内容")
+            create_time = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
+            parent_comment = models.ForeignKey("self", null=True)
+
+            def __str__(self):
+                return self.content
+
+    根评论：
+        对文章的评论
+    子评论：
+        对评论的评论
+
+    3. 按着每一个需求功能进行开发
+
+    4. 功能测试
+    5. 项目上线
