@@ -13,7 +13,12 @@ urlpatterns = [
     re_path('^$', views.index),
     path('get_validCode_img/', views.get_validCode_img),
     path('register/', views.register),
+
+    # 点赞
     path('digg/', views.digg),
+
+    # 评论
+    path('comment/', views.comment),
 
     # media配置
     re_path(r"media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),

@@ -103,13 +103,14 @@ def home_site(request, username, **kwargs):
     return render(request, "home_site.html", {"article_list": article_list, "username": username})
 
 
+# 文章详情页
 def article_detail(request, username, article_id):
     # context = get_classification_data(username)
     user = UserInfo.objects.filter(username=username).first()
     blog = user.blog
     article_obj = models.Article.objects.filter(pk=article_id).first()
-
-    return render(request, "article_detail.html", {"username": username, "article_obj": article_obj})
+    comment_list = models.Comment.objects.filter(article_id=article_id)
+    return render(request, "article_detail.html", locals())
 
 
 # 点赞视图函数
@@ -123,3 +124,21 @@ def digg(request):
     ard = models.ArticleUpDown.objects.create(user_id=user_id, article_id=article_id, is_up=is_up)
     print(request.user)
     return HttpResponse("OK")
+
+
+# 评论视图
+def comment(request):
+    article_id = request.POST.get('article_id')
+    pid = request.POST.get('pid')
+    content = request.POST.get('content')
+    user_id = request.user.pk
+
+    # 生成评论对象
+    comment_obj = models.Comment.objects.create(user_id=user_id, article_id=article_id, content=content,
+                                                parent_comment_id=pid)
+
+    response = {}
+    response['create_time'] = comment_obj.create_time.strftime('%Y-%m-%d %X')
+    response["username"] = request.user.username
+    response["content"] = content
+    return JsonResponse(response)

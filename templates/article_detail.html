@@ -6,17 +6,49 @@
     <div class="cont">
         {{ article_obj.content|safe }}
     </div>
-    <div id="div_digg">
-        <div class="diggit action">
-            <span class="diggnum" id="digg_count">{{ article_obj.up_count }}</span>
+    <div class="clearfix">
+        <div id="div_digg">
+            <div class="diggit action">
+                <span class="diggnum" id="digg_count">{{ article_obj.up_count }}</span>
+            </div>
+            <div class="buryit action">
+                <span class="burynum" id="bury_count">{{ article_obj.down_count }}</span>
+            </div>
+            <div class="clear"></div>
+            <div class="diggword" id="digg_tips" style="color: red;"></div>
         </div>
-        <div class="buryit action">
-            <span class="burynum" id="bury_count">{{ article_obj.down_count }}</span>
-        </div>
-        <div class="clear"></div>
-        <div class="diggword" id="digg_tips" style="color: red;"></div>
+    </div>
+
+    <div class="comments">
+        <p>评论列表</p>
+        <ul class="comment_list list-group">
+
+            {% for comment in comment_list %}
+                <li class="list-group-item">
+                    <div>
+                        <a href=""># {{ forloop.counter }}楼</a>&nbsp;&nbsp;
+                        <span>{{ comment.create_time |date:'Y-m-d H:i' }}</span>&nbsp;&nbsp;
+                        <a href=""><span>{{ comment.user.username }}</span></a>&nbsp;&nbsp;
+                        <a href="" class="pull-right">回复</a>
+                    </div>
+                    <div class="comment_con">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+
+        </ul>
+        <p>发表评论</p>
+        <p>昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50"
+                     value="{{ request.user.username }}"></p>
+        <p>评论内容：</p>
+        <textarea name="" id="comment_content" cols="60" rows="10"></textarea>
+        <p>
+            <button class="btn btn-default comment_btn">提交评论</button>
+        </p>
     </div>
     <script>
+        // 点赞请求
         $("#div_digg .action").click(function () {
             var is_up = $(this).hasClass("diggit");
             $.ajax({
@@ -33,7 +65,49 @@
                 },
             })
 
-        })
+        });
+
+        // 提交评论请求
+        $(".comment_btn").click(function () {
+            // 获取评论内容
+            let content = $('#comment_content').val();
+            // 父评论id默认为空
+            let pid = '';
+
+            $.ajax({
+                url: "/comment/",
+                type: 'post',
+                data: {
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "article_id":{{ article_obj.pk }},
+                    'content': content,
+                    'pid': pid
+                },
+                success: function (data) {
+                    let create_time = data.create_time;
+                    let username = data.username;
+                    let content = data.content;
+
+                    // 清空评论框
+                    $("#comment_content").val("");
+                    // 构建一个标签字符串
+                    let s = `
+                        <li class="list-group-item">
+                        <div>
+
+                            <span>${create_time}</span>&nbsp;&nbsp;
+                            <a href=""><span>${username}</span></a>&nbsp;&nbsp;
+                        </div>
+                        <div class="comment_con">
+                            <p>${content}</p>
+                        </div>
+                    </li>`;
+                    // 将标签字符串放入
+                    $("ul.comment_list").append(s);
+
+                }
+            })
+        });
     </script>
 {% endblock %}
 

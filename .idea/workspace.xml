@@ -50,6 +50,7 @@
     </option>
   </component>
   <component name="ProjectId" id="25OhafvBhb1gJKdFUXNrIQWPOMm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -60,20 +61,21 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="ignore_missing_gitignore" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../第八模块" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\pythonlxBBS\media\avatars" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\pythonlxBBS\static\blog\bs\fonts" />
       <recent name="E:\pythonlxBBS\templates" />
       <recent name="E:\pythonlxBBS\media\avatars" />
       <recent name="E:\pythonlxBBS\static\blog\img" />
       <recent name="E:\pythonlxBBS\static\blog" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\pythonlxBBS\media\avatars" />
     </key>
   </component>
   <component name="RunManager">
@@ -150,22 +152,22 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="463" y="124" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1647667522557" />
-    <state width="1322" height="176" key="GridCell.Tab.0.bottom" timestamp="1647435756779">
+    <state width="1322" height="135" key="GridCell.Tab.0.bottom" timestamp="1648124344522">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1322" height="176" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1647435756779" />
-    <state width="1322" height="176" key="GridCell.Tab.0.center" timestamp="1647435756779">
+    <state width="1322" height="135" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1648124344522" />
+    <state width="1322" height="135" key="GridCell.Tab.0.center" timestamp="1648124344522">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1322" height="176" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1647435756779" />
-    <state width="1322" height="176" key="GridCell.Tab.0.left" timestamp="1647435756779">
+    <state width="1322" height="135" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1648124344522" />
+    <state width="1322" height="135" key="GridCell.Tab.0.left" timestamp="1648124344517">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1322" height="176" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1647435756779" />
-    <state width="1322" height="176" key="GridCell.Tab.0.right" timestamp="1647435756779">
+    <state width="1322" height="135" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1648124344517" />
+    <state width="1322" height="135" key="GridCell.Tab.0.right" timestamp="1648124344522">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1322" height="176" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1647435756779" />
+    <state width="1322" height="135" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1648124344522" />
     <state x="184" y="11" key="SettingsEditor" timestamp="1645409024741">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

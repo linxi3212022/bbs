@@ -1,6 +1,7 @@
-.article_info .title{
+.article_info .title {
     margin-bottom: 20px;
 }
+
 .diggit {
     float: left;
     width: 46px;
@@ -11,6 +12,7 @@
     margin-top: 2px;
     padding-top: 5px;
 }
+
 .buryit {
     float: right;
     margin-left: 20px;
@@ -22,6 +24,7 @@
     margin-top: 2px;
     padding-top: 5px;
 }
+
 #div_digg {
     float: right;
     margin-bottom: 10px;
@@ -31,6 +34,7 @@
     text-align: center;
     margin-top: 10px;
 }
+
 #div_digg {
     float: right;
     margin-bottom: 10px;
@@ -43,4 +47,18 @@
 
 .clear {
     clear: both;
+}
+
+.comments p .author {
+    background-image: url("/static/font/icon_form.gif");
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    padding: 4px 4px 4px 30px;
+    width: 300px;
+    font-size: 13px;
+    background-position: 3px -3px;
+}
+
+.comment_con {
+    margin-top: 10px;
 }
