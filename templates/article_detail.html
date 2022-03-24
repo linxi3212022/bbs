@@ -29,7 +29,7 @@
                         <a href=""># {{ forloop.counter }}楼</a>&nbsp;&nbsp;
                         <span>{{ comment.create_time |date:'Y-m-d H:i' }}</span>&nbsp;&nbsp;
                         <a href=""><span>{{ comment.user.username }}</span></a>&nbsp;&nbsp;
-                        <a href="" class="pull-right">回复</a>
+                        <a class="pull-right reply_btn" username="{{ comment.user.username }}">回复</a>
                     </div>
                     <div class="comment_con">
                         <p>{{ comment.content }}</p>
@@ -117,6 +117,15 @@
 
                 }
             })
+        });
+
+        // 回复按钮事件
+        $(".reply_btn").click(function () {
+            $("#comment_content").focus();
+            let val = "@" + $(this).attr('username') + "\n";
+            $("#comment_content").val(val)
+
+
         });
     </script>
 {% endblock %}
