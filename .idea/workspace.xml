@@ -67,15 +67,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\pythonlxBBS\media\avatars" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\pythonlxBBS\static\blog\bs\fonts" />
       <recent name="E:\pythonlxBBS\templates" />
       <recent name="E:\pythonlxBBS\media\avatars" />
       <recent name="E:\pythonlxBBS\static\blog\img" />
       <recent name="E:\pythonlxBBS\static\blog" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\pythonlxBBS\media\avatars" />
     </key>
   </component>
   <component name="RunManager">

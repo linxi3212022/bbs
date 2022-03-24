@@ -1,6 +1,6 @@
 import json
 
-from django.db.models import Count
+from django.db.models import Count, F
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, redirect
 
@@ -121,9 +121,21 @@ def digg(request):
 
     # 点赞人即当前登陆人
     user_id = request.user.pk
-    ard = models.ArticleUpDown.objects.create(user_id=user_id, article_id=article_id, is_up=is_up)
-    print(request.user)
-    return HttpResponse("OK")
+
+    obj = models.ArticleUpDown.objects.filter(user_id=user_id, article_id=article_id).first()
+    response = {'state': True, }
+    if not obj:
+        ard = models.ArticleUpDown.objects.create(user_id=user_id, article_id=article_id, is_up=is_up)
+        queryset = models.Article.objects.filter(pk=article_id)
+        if is_up:
+            queryset.update(up_count=F("up_count") + 1)
+        else:
+            queryset.update(down_count=F('down_count') + 1)
+    else:
+        response['state'] = False
+        response['handled'] = obj.is_up
+
+    return JsonResponse(response)
 
 
 # 评论视图

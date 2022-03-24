@@ -50,7 +50,8 @@
     <script>
         // 点赞请求
         $("#div_digg .action").click(function () {
-            var is_up = $(this).hasClass("diggit");
+            let is_up = $(this).hasClass("diggit");
+            $obj = $(this).children("span");
             $.ajax({
                 url: "/digg/",
                 type: "post",
@@ -61,7 +62,16 @@
 
                 },
                 success: function (data) {
-                    console.log(data);
+                    if (data.state) {
+                        let val = parseInt($obj.text());
+                        $obj.text(val + 1);
+                    } else {
+                        let val = data.handled ? '您已经推荐过!' : '您已经反对过!';
+                        $("#digg_tips").html(val);
+                        setTimeout(function () {
+                            $("#digg_tips").html("");
+                        }, 1000)
+                    }
                 },
             })
 
